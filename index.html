@@ -81,6 +81,7 @@
     <h1>TodoList</h1>
 
 
+
     <form onSubmit="submitTodo(); return false">
       <input type="text" id="new-todo" placeholder="What needs to be done?">
     </form>
@@ -96,14 +97,14 @@
       </li>
     </ul>
     <div class="footer">
-      Todo: <span id="todo-count">1</span> •
-      Done: <span id="completed-count">0</span> •
-      Total: <span id="total-count">1</span>
+      Todo: <span id="todo-count">1</span> &#x2615
+      Done: <span id="completed-count">0</span> &#x2615
+      Total: <span id="total-count">1</span> &#x2615
+      <a href="#" onClick="cleanUpDoneTodos(); return false">Clean up</a>
     </div>
   </div>
 
   <script>
-
     function updateCounters() {
       // Total number of todos
       var totalCount = document.getElementById('total-count');
@@ -121,6 +122,8 @@
       todoCount.innerHTML = uncompletedTodos;
     }
 
+
+
     updateCounters();
 
     function toggleDone() {
@@ -133,6 +136,19 @@
       } else {
         checkbox.parentElement.className = "todo";
       }
+
+      updateCounters();
+    }
+
+
+    function submitTodo() {
+      var inputField = document.getElementById("new-todo");
+      var newTodoTitle = inputField.value;
+      createTodo(newTodoTitle);
+
+      // reset the value of the inputField to make it empty and
+      // ready to create new todos
+      inputField.value = null;
 
       updateCounters();
     }
@@ -171,20 +187,22 @@
     // "for" attribute to make sure that when we click the label, the checkbox
     // toggles
     function nextTodoId() {
-      return document.getElementsByClassName("todo").length + 1;
+      return document.getElementsByClassName("todo").length - 1;
     }
 
-    function submitTodo() {
-      var inputField = document.getElementById("new-todo");
-      var newTodoTitle = inputField.value;
-      createTodo(newTodoTitle);
+    function cleanUpDoneTodos() {
+      var list = document.getElementById("todolist");
+      var doneItems = document.getElementsByClassName("completed");
 
-      // reset the value of the inputField to make it empty and
-      // ready to create new todos
-      inputField.value = null;
+      // Reverse loop through the done todo items so we can remove them without changing the index of the remaining items when we remove them
+      for (var i = doneItems.length; i > 0; i--) {
+        list.removeChild(doneItems[i-1]);
+      }
 
       updateCounters();
     }
+
+
 
   </script>
 </body>
