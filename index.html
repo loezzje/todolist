@@ -121,6 +121,7 @@
       todoCount.innerHTML = uncompletedTodos;
     }
 
+    updateCounters();
 
     function toggleDone() {
       var checkbox = this;
@@ -131,10 +132,14 @@
         checkbox.parentElement.className = "todo completed";
       } else {
         checkbox.parentElement.className = "todo";
-    }
+      }
+    
 
     updateCounters();
   }
+
+
+
   </script>
 </body>
 </html>
